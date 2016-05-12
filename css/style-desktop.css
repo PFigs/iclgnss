@@ -28,7 +28,7 @@
 			h2.major span
 			{
 				top: -0.775em;
-				padding: 0 1.5em 0 1.5em;
+				padding: 0 0.5em 0 0.5em;
 			}
 
 	h3
@@ -38,7 +38,7 @@
 
 	h4
 	{
-		font-size: 1.25em;
+		font-size: 1.65em;
 	}
 
 	/* Button */
@@ -218,13 +218,13 @@
 
 	#banner-wrapper
 	{
-		padding: 16em 0;
+		padding: 10em 0;
 	}
 	
 	#main-wrapper
 	{
-		border-top-width: 35px;
-		border-bottom-width: 10px;
+		border-top-width: 0px;
+		border-bottom-width: 0px;
 	}
 	
 /*********************************************************************************/
@@ -238,7 +238,7 @@
 		font-family: 'Open Sans Condensed', sans-serif;
 		font-weight: 700;
 		text-transform: uppercase;
-		padding: 5em 0 2em 0;
+		padding: 3em 0 2em 0;
 		background: #fff;
 		margin: 0 auto;
 	}
@@ -247,7 +247,6 @@
 		{
 			position: relative;
 			text-align: center;
-			border-top: solid 5px #e7eae8;
 		}
 
 			#header .logo div
@@ -255,8 +254,7 @@
 				background: #fff;
 				position: relative;
 				display: inline-block;
-				padding: 0 1.5em 0 1.5em;
-				top: -0.65em;
+				padding: 0 0em 0 0em;
 			}
 		
 			#header .logo h1,
@@ -269,6 +267,13 @@
 			{
 				color: #C1CAC5;
 			}
+
+	#pic {	    
+	    width: 10%; /* image width */
+	    height: 10%; /* image height */
+	    margin-top: 0.4em;
+	    display: inline-block; /* so that it behaves like the img element */
+	}
 
 /*********************************************************************************/
 /* Nav                                                                           */
@@ -283,8 +288,8 @@
 		background-color: rgba(255,255,255,0.95);
 		background-image: url('images/overlay.png');
 		width: 100%;
-		height: 3.25em;
-		line-height: 3.25em;
+		height: 3.65em;
+		line-height: 3.65em;
 		text-align: center;
 		font-family: 'Open Sans Condensed', sans-serif;
 		font-weight: 700;
@@ -324,7 +329,7 @@
 				text-decoration: none;
 				color: #6b7770;
 				top: -6px;
-				padding: 6px 1.5em 0.25em 1.5em;
+				padding: 8px 1.5em 0.2em 1.5em;
 				border-bottom-left-radius: 6px;
 				border-bottom-right-radius: 6px;
 				outline: 0;
