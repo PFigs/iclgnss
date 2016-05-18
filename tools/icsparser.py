@@ -40,21 +40,22 @@ def boxpost(heading,date,time,description):
     return addElement(btag, header + para, etag)
 
 
-def bsPanel(heading, body):
+def bsPanel(heading, hour, date, body):
     """creates a bootstrap panel"""
     btag = "<div class=\"panel panel-default\">"
     etag = "</div>"
-    head = addHeading(heading)
+    head = addHeading(heading, date, hour)
     body = addBody(addLineBreak(addBold(body)))
     return addElement(btag, head + body, etag)
 
 
 #### HELPERS
 
-def addHeading(heading):
+def addHeading(heading, hour, date):
     btag = "<div class=\"panel-heading\"><b>"
     etag = "</b></div>"
-    return addElement(btag, heading, etag)
+    meta = addMeta(date, hour)
+    return addElement(btag, heading + meta, etag)
 
 
 def addBody(body):
@@ -129,20 +130,22 @@ if __name__ == "__main__":
     for event in cal.walk('vevent'):
         if 'Session' in event['SUMMARY']:
             cet = event['DTSTART'].dt + dutc
-
+            sHour = cet.strftime("%H:%M")
+            sDate = cet.strftime("%d.%m")
             # following bootstrap
             bootstrap.append(
-                bsPanel(event['SUMMARY']
-                + ' '
-                + cet.strftime("(%H:%M on %d.%m)"),
-                                  event['DESCRIPTION'])
+                bsPanel(
+                    event['SUMMARY'],
+                    sHour,
+                    sDate,
+                    event['DESCRIPTION'])
             )
 
             # following website theme
             txt.append(
                 boxpost(event['SUMMARY'],
-                cet.strftime("%d.%m"),
-                cet.strftime("%H%M"),
+                sDate,
+                sHour,
                 event['DESCRIPTION'])
             )
 
