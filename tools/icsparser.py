@@ -95,9 +95,8 @@ def addBold(text):
 
         if 'papers' in s:
             del(lines[i])
-        if ':' in s:
-            if s.count(':') == 1:
-                lines[i] = '<b>' + s + '</b>'
+        if "\"" in s:
+            lines[i] = '<b>' + s + '</b>'
 
     return "\n".join(lines)
 
