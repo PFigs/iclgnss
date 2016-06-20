@@ -36,24 +36,24 @@ def boxpost(heading,date,time,description):
     btag = "<section class=\"box post\">"
     etag = "</section>"
     header = addHeader(heading, date, time)
-    para = "<p>" + addLineBreak(addBold(description)) + "</p>"
+    para = "<p>" + addLineBreak(addStyle(description)) + "</p>"
     return addElement(btag, header + para, etag)
 
 
 def bsPanel(heading, hour, date, body):
     """creates a bootstrap panel"""
     btag = "<div class=\"panel panel-default\">"
-    etag = "</div>"
-    head = addHeading(heading, date, hour)
-    body = addBody(addLineBreak(addBold(body)))
+    etag = "</div>\n\n"
+    head = addHeading(addStyle(heading), date, hour)
+    body = addBody(addLineBreak(addStyle(body)))
     return addElement(btag, head + body, etag)
 
 
 #### HELPERS
 
 def addHeading(heading, hour, date):
-    btag = "<div class=\"panel-heading\"><b>"
-    etag = "</b></div>"
+    btag = "<div class=\"panel-heading\">"
+    etag = "</div>"
     meta = addMeta(date, hour)
     return addElement(btag, heading + meta, etag)
 
@@ -84,18 +84,20 @@ def addHeader(heading, date, time):
     return addElement(btag, body + meta, etag)
 
 
-def addBold(text):
+def addStyle(text):
     lines = list(text.split("\n"))
     for i, s in enumerate(lines):
         if 'Abstract' in s:
             lines[i] = '<b>' + s + '</b>'
-
-        if 'Biography' in s:
+        elif 'Biography' in s:
             lines[i] = '<b>' + s + '</b>'
-
-        if 'papers' in s:
+        elif 'chair' in s:
+            lines[i] = '<i>' + s + '</i>'            
+        elif 'Session' in s:
+            lines[i] = '<b>' + s + '</b>'
+        elif 'papers' in s:
             del(lines[i])
-        if "\"" in s:
+        elif "\"" in s:
             lines[i] = '<b>' + s + '</b>'
 
     return "\n".join(lines)
@@ -120,14 +122,13 @@ if __name__ == "__main__":
     fin = open('iclgnss.ics', 'rb')
     cal = ical.Calendar.from_ical(fin.read())
     bootstrap = list()
-    txt = list()
 
     # ical in UTC time
     dutc = datetime.timedelta(hours=UTC_OFFSET)
 
     # create element for each event
     for event in cal.walk('vevent'):
-        if 'Session' in event['SUMMARY']:
+        if 'Session' in event['SUMMARY'] or 'Plenary' in event['SUMMARY']:
             cet = event['DTSTART'].dt + dutc
             sHour = cet.strftime("%H:%M")
             sDate = cet.strftime("%d.%m")
@@ -140,22 +141,13 @@ if __name__ == "__main__":
                     event['DESCRIPTION'])
             )
 
-            # following website theme
-            txt.append(
-                boxpost(event['SUMMARY'],
-                sDate,
-                sHour,
-                event['DESCRIPTION'])
-            )
-
     # full index.html
     fout = open('index.html', 'w')
     bootstrapBoiler(bootstrap, fout)
 
     fout = open('bootstrap.html', 'w')
+    bootstrap.sort()
     for each in bootstrap:
         fout.write(each.encode('utf-8'))
 
-    fout = open('txt.html', 'w')
-    for each in txt:
-        fout.write(each.encode('utf-8'))
+
